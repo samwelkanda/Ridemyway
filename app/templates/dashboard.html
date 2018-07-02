@@ -23,89 +23,22 @@
             </nav>
         </header>
         <main>
+            <h1>Hello, {{ user.username }}!</h1>
             <section class="available_offers-links">
                 <div class="wrapper">
                     <h2>Available Offers</h2>
+                    {% for ride in rides %}
                         <div class="available-link">
                             <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
+                                <li class="header">{{ ride.driver.username }}</li>
+                                <li class="emph"><strong>{{ ride.time }}</strong></li>
+                                <li><strong>{{ ride.from }}</strong></li>
                                 <li>To</li>
-                                <li><strong>Destination</strong></li>
+                                <li><strong>{{ ride.destination }}</strong></li>
                                 <li class="emph"><a href="available1.html" class="button">Request</a></li>
                             </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>    
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>
-                        <div class="available-link">
-                            <ul class="offer-box">
-                                <li class="header">Driver</li>
-                                <li class="emph"><strong>Time</strong></li>
-                                <li><strong>From</strong></li>
-                                <li>To</li>
-                                <li><strong>Destination</strong></li>
-                                <li class="emph"><a href="available1.html" class="button">Request</a></li>
-                            </ul>
-                        </div>                          
+                        </div> 
+                    {% endfor %}     
                 </div>                        
             </section>      
             </main>
