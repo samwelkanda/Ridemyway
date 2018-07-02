@@ -1,0 +1,202 @@
+/*Header*/
+
+*{
+    text-decoration: none;
+}
+
+main {
+    padding-top: 100px;
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100px;
+}
+
+header .header-brand {
+    font-family: Catamaran;
+    font-size: 24px;
+    font-weight: 900;
+    color: #111;
+    text-transform: uppercase;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0; 
+}
+
+header nav ul {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+
+}
+
+header nav ul li {
+    display: inline-block;
+    float: left;
+    list-style: none;
+    padding: 0 16px;
+
+}
+
+header nav ul li a {
+    font-family: Catamaran;
+    font-size: 16px;
+    color: #111;    
+}
+
+header .header-profile {
+    display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+    header .header-brand {
+        margin: 31px 0;
+        text-align: left;
+        line-height: 38px;
+        padding: 0 20px 0 40px;
+        border-right: 3px solid #111;
+        float: left; 
+    }
+
+    header nav ul {
+        margin: 20px 0px 0px 20px;
+        float: left;
+    }
+    
+    
+    header nav ul li a {
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111;
+        line-height: 60px;
+        text-transform: uppercase;
+
+    }
+
+    header .header-profile {
+        display: block;
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111; 
+        text-transform: uppercase;
+        line-height: 38px;
+        border: 1px solid #111;
+        float: right;
+        margin-right: 40px;
+        margin-top: 30px;
+        padding: 0 20px;
+
+    }
+
+    header .header-access {
+        display: block;
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111; 
+        text-transform: uppercase;
+        line-height: 38px;
+        border: 1px solid #111;
+        float: right;
+        margin-right: 40px;
+        margin-top: 30px;
+        padding: 0 20px;
+
+    }
+}
+/* Body*/
+
+body{
+    margin: 0;
+    padding: 0;
+    background: url(Ride_Sharing_Big.jpg);
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+    line-height: 30px;
+}
+
+.loginbox{
+    width: 320px;
+    height: 420px;
+    background: #000;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+}
+
+h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.loginbox p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.loginbox input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.loginbox input[type="text"], input[type="password"]
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.loginbox input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #fb2525;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.loginbox input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: #ffc107;
+    color: #000;
+}
+.loginbox a{
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey;
+}
+
+.loginbox a:hover
+{
+    color: #ffc107;
+}

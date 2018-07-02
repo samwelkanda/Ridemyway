@@ -1,0 +1,580 @@
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+/*Header*/
+
+*{
+    text-decoration: none;
+}
+
+main {
+    padding-top: 100px;
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100px;
+}
+
+header .header-brand {
+    font-family: Catamaran;
+    font-size: 24px;
+    font-weight: 900;
+    color: #111;
+    text-transform: uppercase;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0; 
+}
+
+header nav ul {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+
+}
+
+header nav ul li {
+    display: inline-block;
+    float: left;
+    list-style: none;
+    padding: 0 16px;
+
+}
+
+header nav ul li a {
+    font-family: Catamaran;
+    font-size: 16px;
+    color: #111;    
+}
+
+header .header-profile {
+    display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+    header .header-brand {
+        margin: 31px 0;
+        text-align: left;
+        line-height: 38px;
+        padding: 0 20px 0 40px;
+        border-right: 3px solid #111;
+        float: left; 
+    }
+
+    header nav ul {
+        margin: 20px 0px 0px 20px;
+        float: left;
+    }
+    
+    
+    header nav ul li a {
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111;
+        line-height: 60px;
+        text-transform: uppercase;
+
+    }
+
+    header .header-profile {
+        display: block;
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111; 
+        text-transform: uppercase;
+        line-height: 38px;
+        border: 1px solid #111;
+        float: right;
+        margin-right: 40px;
+        margin-top: 30px;
+        padding: 0 20px;
+
+    }
+
+    header .header-access {
+        display: block;
+        font-family: Catamaran;
+        font-size: 16px;
+        color: #111; 
+        text-transform: uppercase;
+        line-height: 38px;
+        border: 1px solid #111;
+        float: right;
+        margin-right: 40px;
+        margin-top: 30px;
+        padding: 0 20px;
+
+    }
+}
+
+/* Dashboard*/
+
+.dashboard-banner {
+    width: 100%;
+    height: calc(100vh - 266px);
+    background-image: url("Students_Carpool-47.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: table;
+}
+
+.vertical-centre {
+    display: table-cell;
+    vertical-align: middle
+
+
+}
+.dashboard-banner h2 {
+    font-family: Catamaran;
+    font-size: 60px;
+    line-height: 70px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    text-shadow: 2px 2xp #111
+}
+
+.dashboard-banner h1 {
+    font-family: Cormorant Garamond;
+    font-size: 28px;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
+    text-shadow: 2px 2xp #111;
+    font-style: italic;
+    line-height: 40px;
+}
+
+.dashboard-links div {
+     margin: 16px 16px 0;
+     width: calc(100% - 32px);
+     height: 100px;
+     background-color: #f2f2f2
+}
+
+.dashboard-links div h3 {
+    font-family: Catamaran;
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+    text-align: center;
+    text-shadow: 2px 2xp #111;
+    line-height: 100px;
+}
+
+@media only screen and (min-width: 1000px) {
+
+    .wrapper {
+        width: 1000px;
+        margin: 0 auto;
+    }
+
+    .dashboard-banner {
+        width: 100%;
+        height: 450px;
+        background-image: url("Students_Carpool-47.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: table;
+    }
+
+    .dashboard-banner h1 {
+        display: block;
+        width: 600px;
+        margin: 0 auto;
+    }
+
+}
+
+/* Available Offers*/
+
+.available_offers-links {
+    overflow: hidden;
+    margin: 20px;
+    font-family: Arial;
+    background: #fff;
+    color: #333;
+}
+ 
+.available_offers-links h2 {
+     font-family: Catamaran;
+     font-size: 28px;
+     font-weight: 600;
+     color: #111
+     text-transform: uppercase;
+}
+ 
+.available_offers-links .available-link {
+     float: left;
+     width: 230px;
+     height: 230px;
+     margin: 20px 10px 0;
+     background-color: #e3e3e3;
+     box-sizing: border-box;
+}
+ 
+.available_offers-links .available-link p {
+     padding-top: 45%;
+     font-family: Catamaran;
+     font-size: 16px;
+     font-weight: 600;
+     color: #111;
+     text-align: center;
+     text-transform: uppercase;
+}
+ 
+.offer-box {
+      list-style: none;
+      border: 1px solid;
+      margin: 0;
+      padding: 0;
+      transition: 0.3s;
+     
+}
+ 
+.offer-box:hover {
+      box-shadow: 0 10px 15px 0 turquoise;
+}
+ 
+.offer-box .header {
+      background-color: #111;
+      color: #fff;
+      font-size: 25px;
+}
+ 
+.offer-box li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+ 
+}
+ 
+.button {
+      background-color: #4CAf50;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 18px;
+}
+
+ /* About Page*/
+
+ .about h2 {
+    font-family: Catamaran;
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+    text-align: center;
+    text-transform: uppercase;
+ }
+
+ .about article div p {
+    padding-top: 50px; 
+    font-family: Catamaran;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #111;
+    text-align: center;
+    column-count: 2;
+    column-gap: 30px;
+    padding-bottom: 50px;
+ }
+
+ /*Create Ride*/
+ .myoffer-{
+    background: tan;
+    color: #111;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; 
+    
+}
+
+.myoffer- h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.myoffer- p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.myoffer- input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.myoffer- input[type="text"], input[type="datetime-local"], input[type="number"]
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.myoffer- select
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.myoffer- textarea
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.myoffer- input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #000;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.myoffer- input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: #1cff07;
+    color: #000;
+}
+/*My Rides*/
+
+.myoffers {
+    background: #fff;
+
+}
+
+.myoffers h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.myoffers table {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    table-layout: fixed;
+}
+
+.myoffers table, tr, th, td {
+    padding: 20px;
+    color: white;
+    border: 1px solid #080808;
+    border-collapse: collapse;
+    font-size: 18px;
+    font-family: Arial;
+    background: linear-gradient(top, #3c3c3c 0%, #222222 100%);
+    background: -webkit-linear-gradient(top, #3c3c3c 0%, #222222 100%)
+}
+
+.myoffers td:hover {
+    background: teal;
+}
+
+/*All Offers*/
+
+
+.alloffers {
+    background: #fff;
+
+}
+
+.alloffers h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.alloffers table {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    table-layout: fixed;
+}
+
+.alloffers table, tr, th, td {
+    padding: 20px;
+    color: white;
+    border: 1px solid #080808;
+    border-collapse: collapse;
+    font-size: 18px;
+    font-family: Arial;
+    background: linear-gradient(top, #3c3c3c 0%, #222222 100%);
+    background: -webkit-linear-gradient(top, #3c3c3c 0%, #222222 100%)
+}
+
+.alloffers td:hover {
+    background: teal;
+}
+
+/*Footer*/
+
+
+footer {
+    width: calc(100% - 80px);
+    padding: 40px 40px;
+    margin-top: 20px;
+    background-color: #111;
+
+}
+
+footer ul {
+    width: fit-content;
+    padding-left: 20px;    
+}
+
+footer ul li{
+    display: block;
+    list-style: none;
+    color: #fff
+}
+
+footer ul li a {
+    font-family: Catamaran;
+    font-size: 16px;
+    color: #fff;
+    line-height: 30px;
+}
+
+footer h5 {
+    padding-top: 20px;
+    font-family: Catamaran;
+    font-size: 16px;
+    color: #fff;
+    line-height: 30px;
+    text-align: center;
+}
