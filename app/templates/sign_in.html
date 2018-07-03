@@ -21,11 +21,13 @@
         <div class="loginbox">
         <img src="avatar.png" class="avatar">
             <h1>Sign In Here</h1>
-            <form action="dashboard.html">
+            <form action="dashboard.html" method="POST" novalidate>
+                {{ form.hidden_tag() }}
                 <p>email</p>
                 <input type="text" name="" required="" placeholder="Enter your email">
                 <p>Password</p>
                 <input type="password" name="" required="" placeholder="Enter Password">
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                 <input type="submit" name="" value="Sign In">
                 <a href="#">Lost your password?</a><br>
                 <a href="sign_up.html">Don't have an account?</a>
