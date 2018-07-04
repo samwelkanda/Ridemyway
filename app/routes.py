@@ -69,4 +69,7 @@ def messages():
 def requests():
     return render_template('about.html', title='Requests')
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', title='Profile')
 
