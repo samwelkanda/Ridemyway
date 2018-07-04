@@ -1,38 +1,24 @@
-<!DOCTYPE html>
-<html>    
-    <head>
-        <meta charset="UTF-8">
-        <title>Sign In</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
-        href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900|Cormorant+Garamond:300, 300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <link rel="stylesheet" href="sign_in_style.css">   
-    </head>
-    <body>
-        <header>
-            <a href=index.html class="header-brand"> Ride My Way</a>
-            <nav>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-                <a href="sign_up.html" class="header-access">Sign Up</a>
-            </nav>
-        </header>
-        <div class="loginbox">
-        <img src="avatar.png" class="avatar">
-            <h1>Sign In Here</h1>
-            <form action="dashboard.html" method="POST" novalidate>
-                {{ form.hidden_tag() }}
-                <p>email</p>
-                <input type="text" name="" required="" placeholder="Enter your email">
-                <p>Password</p>
-                <input type="password" name="" required="" placeholder="Enter Password">
-                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-                <input type="submit" name="" value="Sign In">
-                <a href="#">Lost your password?</a><br>
-                <a href="sign_up.html">Don't have an account?</a>
-            </form>        
-        </div>
-</body>
-</head>
-</html
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

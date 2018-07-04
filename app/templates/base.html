@@ -2,41 +2,50 @@
     <head>
         <meta charset="UTF-8">
         {% if title %}
-        <title>Available Rides</title>
+        <title>{{ title }} - RideMyWay</title>
         {% else %}
         <title>Welcome to RideMyWay</title>
         {% endif %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link
         href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900|Cormorant+Garamond:300, 300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">   
+        <link rel="stylesheet" href="css/style.css" type="text/css">   
     </head>
     <body>
         <header>
-            <a href=dashboard.html class="header-brand"> Ride My Way</a>
+            <a href="{{ url_for('dashboard') }}" class="header-brand"> Ride My Way</a>
             <nav>
                 <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="offer.html">Create ride</a></li>
-                    <li><a href="history.html">History</a></li>
-                    <li><a href="myrides.html">Messages</a></li>
-                    <li><a href="available.html">Requests</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('create') }}">Create ride</a></li>
+                    <li><a href="{{ url_for('history') }}">History</a></li>
+                    <li><a href="{{ url_for('messages') }}">Messages</a></li>
+                    <li><a href="{{ url_for('requests') }}">Requests</a></li>
                 </ul>
-                <a href="profile.html" class="header-profile">Profile</a>
+                <a href="{{ url_for('profile') }}" class="header-profile">Profile</a>
             </nav>
         </header>
         <main>
             <hr>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
             {% block content %}{% endblock %}
         </main>
         <div class="wrapper"></div>
                 <footer>
                     <ul>
-                        <li><a href="dashboard.html">Dashboard</a></li>
-                        <li><a href="available.html">Available Rides</a></li>
-                        <li><a href="offer.html">Create a ride</a></li>
-                        <li><a href="history.html">History</a></li>
-                        <li><a href="Logout.html">Logout</a></li>
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('all') }}">All Rides</a></li>
+                        <li><a href="{{ url_for('create') }}">Create a ride</a></li>
+                        <li><a href="{{ url_for('history') }}">History</a></li>
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     </ul>
                     <h5>Copyright 2018 - Samwel Kanda</h5>
                 </footer>
