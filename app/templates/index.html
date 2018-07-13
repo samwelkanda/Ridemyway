@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html>    
-    <head>
-        <meta charset="UTF-8">
-        <title>Ride My Way</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
-        href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900|Cormorant+Garamond:300, 300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">   
-    </head>
-    <body>
-        <header>
-            <a href=index.html class="header-brand"> Ride My Way</a>
-            <nav>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-                <a href="sign_in.html" class="header-access">Sign In</a>
-                <a href="sign_up.html" class="header-access">Sign Up</a>
-            </nav>
-        </header>
-        <main>            
-            <section class="dashboard-banner">
-                <div class="verical-center">
-                    <h2>WHY RIDE <br>ALONE?</h2>
-                    <h1>Share a ride and enjoy time with family and friends and make more friends!</h1>
-                </div>
-            </section>
-            </main>
-            <div class="wrapper"></div>
-                <footer>
-                    <ul>
-                        <li><a href="sign_in.html">Sign In</a></li>
-                        <li><a href="sign_up.html">Sign Up</a></li>
-                    </ul>
-                    <h5>Copyright 2018 - Samwel Kanda</h5>
-                </footer>
-            </div>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}        
+<section class="dashboard-banner">
+        <div class="verical-center">
+            <h2>WHY RIDE <br>ALONE?</h2>
+            <h1>Share a ride and enjoy time with family and friends and make more friends!</h1>
+        </div>
+    </section>
+{% endblock %}
+            

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ user.username }}!</h1>
+    <h1>Hi, {{ current_user.username }}!</h1>
+    <h2>Rides from your friends </h2>
     {% for ride in rides %}
     <div>
         <p>{{ ride.driver.username }}</p> 
@@ -10,4 +11,4 @@
         <p>USD {{ride.cost}}</p>
     </div>
     {% endfor %}
-{% endblock %}
+{% endblock %}  

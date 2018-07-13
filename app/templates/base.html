@@ -15,6 +15,13 @@
         <header>
             <a href="{{ url_for('dashboard') }}" class="header-brand"> Ride My Way</a>
             <nav>
+                {% if current_user.is_anonymous %}
+                <ul>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                    <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+                </ul>
+                {% else %}
                 <ul>
                     <li><a href="{{ url_for('about') }}">About</a></li>
                     <li><a href="{{ url_for('create') }}">Create ride</a></li>
@@ -22,7 +29,8 @@
                     <li><a href="{{ url_for('messages') }}">Messages</a></li>
                     <li><a href="{{ url_for('requests') }}">Requests</a></li>
                 </ul>
-                <a href="{{ url_for('profile') }}" class="header-profile">Profile</a>
+                <a href="{{ url_for('user', username=current_user.username) }}" class="header-profile">Profile</a>
+                {% endif %}
             </nav>
         </header>
         <main>
@@ -40,6 +48,13 @@
         </main>
         <div class="wrapper"></div>
                 <footer>
+                {% if current_user.is_anonymous %}
+                    <ul>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                        <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+                    </ul>
+                {% else %}
                     <ul>
                         <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
                         <li><a href="{{ url_for('all') }}">All Rides</a></li>
@@ -47,6 +62,7 @@
                         <li><a href="{{ url_for('history') }}">History</a></li>
                         <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     </ul>
+                {% endif %}
                     <h5>Copyright 2018 - Samwel Kanda</h5>
                 </footer>
             </div>
