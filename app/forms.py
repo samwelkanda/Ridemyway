@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField, IntegerField, DateTimeField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -42,3 +42,11 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+class RideForm(FlaskForm):
+    start = StringField('Start', validators=[DataRequired()])
+    destination = StringField('Destination', validators=[DataRequired()])
+    time = StringField('Time', validators=[DataRequired()])
+    seats = IntegerField('Seats', validators=[DataRequired()])
+    cost = IntegerField('Cost', validators=[DataRequired()])
+    submit = SubmitField('Submit')

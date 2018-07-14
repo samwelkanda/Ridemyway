@@ -2,13 +2,54 @@
 
 {% block content %}
     <h1>Hi, {{ current_user.username }}!</h1>
-    <h2>Rides from your friends </h2>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.start.label }}<br>
+            {{ form.start }}<br>
+            {% for error in form.start.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.destination.label }}<br>
+            {{ form.destination }}<br>
+            {% for error in form.destination.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.time.label }}<br>
+            {{ form.time }}<br>
+            {% for error in form.time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.seats.label }}<br>
+            {{ form.seats }}<br>
+            {% for error in form.seats.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.cost.label }}<br>
+            {{ form.cost }}<br>
+            {% for error in form.cost.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
     {% for ride in rides %}
-    <div>
-        <p>{{ ride.driver.username }}</p> 
-        <p><b>{{ ride.from }}</b> To <b>{{ ride.destination }}</b></p>
-        <p>{{ride.time}}</p>
-        <p>USD {{ride.cost}}</p>
-    </div>
+        {% include '_ride.html' %}
     {% endfor %}
+    {% if prev_url %}
+    <a href="{{ prev_url }}">Newer rides</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">Older rides</a>
+    {% endif %}
 {% endblock %}  

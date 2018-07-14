@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for,request
 from app import app, db
-from app.forms  import LoginForm, RegistrationForm, EditProfileForm
+from app.forms  import LoginForm, RegistrationForm, EditProfileForm, RideForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Ride
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -12,39 +12,31 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     return render_template('index.html', title='Index')
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    rides = [
-        {
-            'driver': {'username': 'king'},
-            'time': '05/21/2018 09:00 AM',
-            'from': 'Karen',
-            'destination': 'Statehouse',
-            'cost':'100'
-        },
-        {
-            'driver': {'username': 'susan'},
-            'time': '05/21/2018 12:00 AM',
-            'from': 'JKIA',
-            'destination': 'Lavington',
-            'cost':'150'
-        },
-        {
-            'driver': {'username': 'Lingard'},
-            'time': '05/21/2018 05:00 PM',
-            'from': 'Upperhill',
-            'destination': 'Syokimau',
-            'cost':'50'
-        },
-
-    ]
-    return render_template('dashboard.html', title='Home', rides=rides)
+    form = RideForm()
+    if form.validate_on_submit():
+        ride = Ride(start=form.start.data, destination=form.destination.data, time=form.time.data, seats=form.seats.data, cost=form.cost.data, driver=current_user)
+        db.session.add(ride)
+        db.session.commit()
+        flash('Your ride is now live!')
+        return redirect(url_for('dashboard'))
+    page = request.args.get('page', 1, type=int)
+    rides = current_user.followed_rides().paginate(
+        page, app.config['RIDES_PER_PAGE'], False)
+    next_url = url_for('index', page=rides.next_num) \
+        if rides.has_next else None
+    prev_url = url_for('dashboard', page=rides.prev_num) \
+        if rides.has_prev else None
+    return render_template('dashboard.html', title='Home', form=form, rides=rides.items, next_url=next_url,
+                           prev_url=prev_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -81,24 +73,16 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    rides = [
-        {
-            'driver': user,
-            'time': '04/01/2018 06:30 AM',
-            'from': 'Juja',
-            'destination': 'Upperhill',
-            'cost':'150'
-        },
-        {
-            'driver': user,
-            'time': '04/01/2018 05:30 PM',
-            'from': 'Upperhill',
-            'destination': 'Juja',
-            'cost':'150'
-        },
-    ]
+    page = request.args.get('page', 1, type=int)
+    rides = user.rides.order_by(Ride.timestamp.desc()).paginate(
+        page, app.config['RIDES_PER_PAGE'], False)
+    next_url = url_for('user', username=user.username, page=rides.next_num) \
+        if rides.has_next else None
+    prev_url = url_for('user', username=user.username, page=rides.prev_num) \
+        if rides.has_prev else None
+    return render_template('user.html', user=user, rides=rides.items,
+                           next_url=next_url, prev_url=prev_url)
     
-    return render_template('user.html', user=user, rides=rides)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -165,7 +149,14 @@ def create():
 @app.route('/all')
 @login_required
 def all():
-    return render_template('available.html', title='All Rides')
+    page = request.args.get('page', 1, type=int)
+    rides = Ride.query.order_by(Ride.timestamp.desc()).paginate(
+        page, app.config['RIDES_PER_PAGE'], False)
+    next_url = url_for('index', page=rides.next_num) \
+        if rides.has_next else None
+    prev_url = url_for('dashboard', page=rides.prev_num) \
+        if rides.has_prev else None
+    return render_template('dashboard.html', title='Available rides', rides=rides.items, next_url=next_url, prev_url=prev_url)
 
 
 

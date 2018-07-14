@@ -2,10 +2,18 @@
     <table>
         <tr valign="top">
             <td><img src="{{ ride.driver.avatar(36) }}"></td>
-            <td>{{ ride.driver.username }}</td>
-            <td><b>{{ ride.from }}</b> To <b>{{ ride.destination }}</b></td>
-            <td>{{ride.time}}</td>
-            <td>USD {{ride.cost}}</td>
+            <td>
+                <a href="{{ url_for('user', username=ride.driver.username) }}">
+                    {{ ride.driver.username }}
+                </a>
+            </td>        
+                <td><b>{{ ride.start }}</b></td>
+                <td>To</td>
+                <td><b>{{ ride.destination }}</b></td>
+                <td>Time: {{ride.time}}</td>
+                <td>Seats: {{ride.seats}}</td>
+                <td>Cost:USD {{ride.cost}}</td>
+    
         </tr>
     </table>
 </div>

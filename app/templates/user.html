@@ -25,4 +25,10 @@
     {% for ride in rides %}
         {% include '_ride.html' %}
     {% endfor %}
+    {% if prev_url %}
+    <a href="{{ prev_url }}">Newer rides</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">Older rides</a>
+    {% endif %}
 {% endblock %}
