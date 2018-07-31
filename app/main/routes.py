@@ -28,7 +28,7 @@ def dashboard():
         return redirect(url_for('main.dashboard'))
     page = request.args.get('page', 1, type=int)
     rides = current_user.followed_rides().paginate(
-        page, app.config['RIDES_PER_PAGE'], False)
+        page, current_app.config['RIDES_PER_PAGE'], False)
     next_url = url_for('main.dashboard', page=rides.next_num) \
         if rides.has_next else None
     prev_url = url_for('main.dashboard', page=rides.prev_num) \
@@ -43,7 +43,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     rides = user.rides.order_by(Ride.timestamp.desc()).paginate(
-        page, app.config['RIDES_PER_PAGE'], False)
+        page, current_app.config['RIDES_PER_PAGE'], False)
     next_url = url_for('main.user', username=user.username, page=rides.next_num) \
         if rides.has_next else None
     prev_url = url_for('main.user', username=user.username, page=rides.prev_num) \
@@ -109,7 +109,7 @@ def about():
 def all():
     page = request.args.get('page', 1, type=int)
     rides = Ride.query.order_by(Ride.timestamp.desc()).paginate(
-        page, app.config['RIDES_PER_PAGE'], False)
+        page, current_app.config['RIDES_PER_PAGE'], False)
     next_url = url_for('main.all', page=rides.next_num) \
         if rides.has_next else None
     prev_url = url_for('main.all', page=rides.prev_num) \
