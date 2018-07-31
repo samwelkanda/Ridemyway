@@ -1,12 +1,12 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from app import db
+from app import db, login
 from flask_login import UserMixin
-from app import login
 from hashlib import md5
 from time import time
 import jwt
-from app import app
+from flask import current_app
+
 
 
 followers = db.Table('followers',
