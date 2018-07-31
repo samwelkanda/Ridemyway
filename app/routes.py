@@ -165,7 +165,7 @@ def unfollow(username):
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('dashboard'))
 
 @app.route('/about')
 def about():
