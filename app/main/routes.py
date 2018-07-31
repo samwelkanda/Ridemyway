@@ -1,6 +1,6 @@
-from flask import render_template, flash, redirect, url_for,request, jsonify, current_app
+from flask import render_template, flash, redirect, url_for,request, jsonify, current_app, g
 from app import db
-from app.main.forms  import EditProfileForm, RideForm
+from app.main.forms  import EditProfileForm, RideForm, SearchForm
 from flask_login import current_user, login_required
 from app.models import User, Ride
 from datetime import datetime
@@ -11,6 +11,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+        g.search_form = SearchForm()
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
@@ -131,4 +132,17 @@ def messages():
 def requests():
     return render_template('about.html', title='Requests')
 
-
+@bp.route('/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.dashboard'))
+    page = request.args.get('page', 1, type=int)
+    rides, total = Ride.search(g.search_form.q.data, page,
+                               current_app.config['RIDES_PER_PAGE'])
+    next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) \
+        if total > page * current_app.config['RIDES_PER_PAGE'] else None
+    prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) \
+        if page > 1 else None
+    return render_template('search.html', title='Search', rides=rides,
+                           next_url=next_url, prev_url=prev_url)
