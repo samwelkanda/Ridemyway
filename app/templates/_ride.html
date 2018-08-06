@@ -2,14 +2,18 @@
     <tr>
         <td width="70px">
             <a href="{{ url_for('main.user', username=ride.driver.username) }}">
-                <td><img src="{{ ride.driver.avatar(70) }}"></td>
+                <img src="{{ ride.driver.avatar(70) }}">
             </a>
         </td>
         <td>
-            <a href="{{ url_for('main.user', username=ride.driver.username) }}">
-                {{ ride.driver.username }}
-            </a>
-            Created a ride {{ moment(ride.timestamp).fromNow() }}<br>
+            {% set user_link %}
+                <span class="user_popup">
+                    <a href="{{ url_for('main.user', username=ride.driver.username) }}">
+                        {{ ride.driver.username }}
+                    </a>
+                </span>
+            {% endset %}
+            {{user_link}} Created a ride {{ moment(ride.timestamp).fromNow() }}<br>
             From: <b>{{ ride.start }}</b> To <b>{{ ride.destination }}</b><br>
             Time: {{ride.time}}<br>
             Seats: {{ride.seats}}<br>
