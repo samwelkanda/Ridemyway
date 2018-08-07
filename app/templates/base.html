@@ -18,11 +18,28 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.dashboard') }}">Home</a></li>
-                    <li><a href="{{ url_for('main.all') }}">All rides</a></li>
-                    <li><a href="{{ url_for('main.history') }}">History</a></li>
-                    <li><a href="{{ url_for('main.messages') }}">Messages</a></li>
-                    <li><a href="{{ url_for('main.requests') }}">Requests</a></li>
+                    {% if current_user.is_authenticated%}
+                    <li><a href="{{ url_for('main.dashboard') }}"> Home </a></li>
+                    <li><a href="{{ url_for('main.all') }}"> All rides </a></li>
+                    <li><a href="{{ url_for('main.messages') }}"> Messages
+                            {% set new_messages = current_user.new_messages() %}
+                            <span id="message_count" class="badge"
+                                    style="visibility: {% if new_messages %}visible
+                                                        {% else %}hidden{% endif %};">
+                                {{ new_messages }}
+                            </span>
+                        </a>
+                    </li>
+                    <li><a href="{{ url_for('main.requests') }}"> Requests
+                            {% set new_requests = current_user.new_requests() %}
+                            <span id="request_count" class="badge"
+                                  style="visibility: {% if new_requests %}visible
+                                                     {% else %}hidden{% endif %};">
+                                {{ new_requests }}
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
                 {% if g.search_form %}
                 <form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">
@@ -58,7 +75,8 @@
         {% block app_content %}{% endblock %}
     </div>
 <footer><centre>&copy; 2018 - Samwel Kanda</centre></footer>
-{%- endblock content %}
+{% endblock %}
+
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
@@ -105,5 +123,45 @@
                 }
             );
         });
+        function set_message_count(n) {
+            $('#message_count').text(n);
+            $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+        }
+        {% if current_user.is_authenticated %}
+        $(function() {
+            var since = 0;
+            setInterval(function() {
+                    done(
+                    function(message_notifications) {
+                        for (var i = 0; i < message_notifications.length; i++) {
+                            if (message_notifications[i].name == 'unread_message_count')
+                                set_message_count(message_notifications[i].data);
+                            since = message_notifications[i].timestamp;
+                        }
+                    }
+                );
+            }, 10000);
+        });
+        {% endif %}
+        function set_request_count(n) {
+            $('#request_count').text(n);
+            $('#request_count').css('visibility', n ? 'visible' : 'hidden');
+        }
+        {% if current_user.is_authenticated %}
+        $(function() {
+            var since = 0;
+            setInterval(function() {
+                $.ajax('{{ url_for('main.request_notifications') }}?since=' + since).done(
+                    function(request_notifications) {
+                        for (var i = 0; i < request_notifications.length; i++) {
+                            if (request_notifications[i].name == 'unread_request_count')
+                                set_request_count(request_notifications[i].data);
+                            since = request_notifications[i].timestamp;
+                        }
+                    }
+                );
+            }, 10000);
+        });
+        {% endif %}
     </script>
 {% endblock %}

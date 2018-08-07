@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for,request, jsonify, current_app, g
 from app import db
-from app.main.forms  import EditProfileForm, RideForm, SearchForm
+from app.main.forms  import EditProfileForm, RideForm, SearchForm, MessageForm, RequestForm
 from flask_login import current_user, login_required
-from app.models import User, Ride
+from app.models import User, Ride, Message, Request, RequestNotification, MessageNotification
 from datetime import datetime
 from app.main import bp
 
@@ -107,6 +107,38 @@ def user_popup(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user_popup.html', user=user)
 
+@bp.route('/send_message/<message_recipient>', methods=['GET', 'POST'])
+@login_required
+def send_message(message_recipient):
+    user = User.query.filter_by(username=message_recipient).first_or_404()
+    form = MessageForm()
+    if form.validate_on_submit():
+        msg = Message(driver=current_user, message_recipient=user,
+                      body=form.message.data)
+        db.session.add(msg)
+        user.add_messagenotification('unread_message_count', user.new_messages())
+        db.session.commit()
+        flash('Your message has been sent.')
+        return redirect(url_for('main.user', username=message_recipient))
+    return render_template('send_message.html', title='Send Message',
+                           form=form, message_recipient=message_recipient)
+
+@bp.route('/send_request/<request_recipient>', methods=['GET', 'POST'])
+@login_required
+def send_request(request_recipient):
+    user = User.query.filter_by(username=request_recipient).first_or_404()
+    form = RequestForm()
+    if form.validate_on_submit():
+        rqst = Request(driver=current_user, request_recipient=user,
+                      pickup=form.pickup.data, time=form.time.data, seats=form.seats.data)
+        db.session.add(rqst)
+        user.add_requestnotification('unread_request_count', user.new_requests())
+        db.session.commit()
+        flash('Your request has been sent.')
+        return redirect(url_for('main.dashboard'))
+    return render_template('send_request.html', title='Send Request',
+                           form=form, request_recipient=request_recipient)
+
 @bp.route('/about')
 def about():
     return render_template('about.html', title='About')
@@ -123,6 +155,7 @@ def all():
         if rides.has_prev else None
     return render_template('dashboard.html', title='Available rides', rides=rides.items, next_url=next_url, prev_url=prev_url)
 
+
 @bp.route('/history')
 @login_required
 def history():
@@ -131,12 +164,60 @@ def history():
 @bp.route('/messages')
 @login_required
 def messages():
-    return render_template('about.html', title='Messages')
+    current_user.last_message_read_time = datetime.utcnow()
+    current_user.add_messagenotification('unread_message_count', 0)
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(
+        Message.timestamp.desc()).paginate(
+            page, current_app.config['RIDES_PER_PAGE'], False)
+    next_url = url_for('main.messages', page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for('main.messages', page=messages.prev_num) \
+        if messages.has_prev else None
+    return render_template('messages.html', messages=messages.items,
+                           next_url=next_url, prev_url=prev_url)
+
+@bp.route('/message_notifications')
+@login_required
+def message_notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.message_notifications.filter(
+        MessageNotification.timestamp > since).order_by(MessageNotification.timestamp.asc())
+    return jsonify([{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])
 
 @bp.route('/requests')
 @login_required
 def requests():
-    return render_template('about.html', title='Requests')
+    current_user.last_request_read_time = datetime.utcnow()
+    current_user.add_requestnotification('unread_request_count', 0)
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    requests = current_user.requests_received.order_by(
+        Request.timestamp.desc()).paginate(
+            page, current_app.config['RIDES_PER_PAGE'], False)
+    next_url = url_for('main.requests', page=requests.next_num) \
+        if requests.has_next else None
+    prev_url = url_for('main.requests', page=requests.prev_num) \
+        if requests.has_prev else None
+    return render_template('requests.html', requests=requests.items,
+                           next_url=next_url, prev_url=prev_url)
+
+@bp.route('/request_notifications')
+@login_required
+def request_notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.request_notifications.filter(
+        RequestNotification.timestamp > since).order_by(RequestNotification.timestamp.asc())
+    return jsonify([{
+        'name': r.name,
+        'data': r.get_data(),
+        'timestamp': r.timestamp
+    } for r in notifications])
 
 @bp.route('/search')
 @login_required

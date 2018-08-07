@@ -1,6 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from app import db, login
+import json
 from flask_login import UserMixin
 from hashlib import md5
 from time import time
@@ -63,12 +64,29 @@ class User(UserMixin, db.Model):
     car_details = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     rides = db.relationship('Ride', backref='driver', lazy='dynamic')
-    requests = db.relationship('Request', backref='requester', lazy='dynamic')
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='driver', lazy='dynamic')
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='message_recipient', lazy='dynamic')
+    last_message_read_time = db.Column(db.DateTime)
+    messagenotifications = db.relationship('MessageNotification', backref='user',
+                                    lazy='dynamic')
+    requests_sent = db.relationship('Request',
+                                    foreign_keys='Request.sender_id',
+                                    backref='driver', lazy='dynamic')
+    requests_received = db.relationship('Request',
+                                        foreign_keys='Request.recipient_id',
+                                        backref='request_recipient', lazy='dynamic')
+    last_request_read_time = db.Column(db.DateTime)
+    requestnotifications = db.relationship('RequestNotification', backref='user',
+                                    lazy='dynamic')
 
 
     def __repr__(self):
@@ -103,6 +121,7 @@ class User(UserMixin, db.Model):
                 followers.c.follower_id == self.id)
         own = Ride.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Ride.timestamp.desc())
+
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
@@ -116,6 +135,28 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
+    
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(message_recipient=self).filter(
+            Message.timestamp > last_read_time).count()
+
+    def add_messagenotification(self, name, data):
+        self.messagenotifications.filter_by(name=name).delete()
+        n = MessageNotification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(n)
+        return n
+
+    def new_requests(self):
+        last_read_time = self.last_request_read_time or datetime(1900, 1, 1)
+        return Request.query.filter_by(request_recipient=self).filter(
+            Request.timestamp > last_read_time).count()
+
+    def add_requestnotification(self, name, data):
+        self.requestnotifications.filter_by(name=name).delete()
+        r = RequestNotification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(r)
+        return r
 
 @login.user_loader
 def load_user(id):
@@ -131,7 +172,6 @@ class Ride(SearchableMixin, db.Model):
     cost = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    requests = db.relationship('Request', backref='ride', lazy='dynamic')
 
 
     def __repr__(self):
@@ -139,13 +179,43 @@ class Ride(SearchableMixin, db.Model):
 
 class Request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     pickup = db.Column(db.String(40))
     time = db.Column(db.String(40))
     seats = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    ride_id = db.Column(db.Integer, db.ForeignKey('ride.id'))
-
 
     def __repr__(self):
         return '<Request {}>'
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)
+
+class MessageNotification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))
+
+class RequestNotification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))
+

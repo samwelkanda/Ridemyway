@@ -19,5 +19,10 @@
             Seats: {{ride.seats}}<br>
             Cost:USD {{ride.cost}}<br>
         </td>
+        <td>
+            {% if ride.driver.username != current_user %}
+            <p><a href="{{ url_for('main.send_request', request_recipient=ride.driver.username) }}">Request Ride</a></p>
+            {% endif %}
+        </td>
     </tr>
 </table>

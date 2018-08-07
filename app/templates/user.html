@@ -17,11 +17,15 @@
                 {% else %}
                 <p><a href="{{ url_for('main.unfollow', username=user.username) }}">Unfollow</a></p>
                 {% endif %}
+                {% if user != current_user %}
+                <p><a href="{{ url_for('main.send_message', message_recipient=user.username) }}">Send private message</a></p>
+                {% endif %}
             </td>
         </tr>
     </table>
     <hr>
-    <h1>My Rides</h1>
+    {% if user == current_user %}
+    <h1> Rides </h1>
     {% for ride in rides %}
         {% include '_ride.html' %}
     {% endfor %}
@@ -39,4 +43,5 @@
             </li>
         </ul>
     </nav>
+    {% endif %}
 {% endblock %}

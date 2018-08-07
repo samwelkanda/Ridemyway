@@ -1,1 +1,48 @@
-2018-07-31 18:00:50,206 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:69]
+2018-08-07 16:22:05,399 ERROR: Exception on /favicon.ico [GET] [in /home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py", line 1811, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask/app.py", line 2087, in preprocess_request
+    rv = func()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/app/main/routes.py", line 11, in before_request
+    if current_user.is_authenticated:
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask_login/utils.py", line 335, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask_login/login_manager.py", line 359, in _load_user
+    return self.reload_user()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask_login/login_manager.py", line 321, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/app/models.py", line 163, in load_user
+    return User.query.get(int(id))
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/flask_sqlalchemy/__init__.py", line 512, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/sqlalchemy/orm/mapper.py", line 1272, in _configure_all
+    configure_mappers()
+  File "/home/kiptoo/Desktop/repos/Ridemyway/venv/lib/python3.5/site-packages/sqlalchemy/orm/mapper.py", line 3026, in configure_mappers
+    raise e
+sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper|User|user'. Original exception was: Could not determine join condition between parent/child tables on relationship User.requests - there are multiple foreign key paths linking the tables.  Specify the 'foreign_keys' argument, providing a list of those columns which should be counted as containing a foreign key reference to the parent table.
+2018-08-07 16:53:23,390 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 16:54:11,695 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 16:54:37,650 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 20:50:20,771 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 20:51:49,675 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 20:52:14,416 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
+2018-08-07 20:52:38,206 INFO: Ridemyway startup [in /home/kiptoo/Desktop/repos/Ridemyway/app/__init__.py:79]
