@@ -42,5 +42,6 @@ nosetests.xml
 .pydevproject
 
 venv
+logs
 app.db
-microblog.log*
+ridemyway.log*
